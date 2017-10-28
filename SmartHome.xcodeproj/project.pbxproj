@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		225F96FD1F79A2AE00F65AEF /* MainController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 225F96FC1F79A2AE00F65AEF /* MainController.swift */; };
 		22741C231F588B100097D1DA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22741C221F588B100097D1DA /* AppDelegate.swift */; };
-		22741C251F588B100097D1DA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22741C241F588B100097D1DA /* ViewController.swift */; };
-		22741C281F588B100097D1DA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 22741C261F588B100097D1DA /* Main.storyboard */; };
+		22741C251F588B100097D1DA /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22741C241F588B100097D1DA /* LoginController.swift */; };
 		22741C2A1F588B100097D1DA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 22741C291F588B100097D1DA /* Assets.xcassets */; };
 		22741C2D1F588B100097D1DA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 22741C2B1F588B100097D1DA /* LaunchScreen.storyboard */; };
 		22741C381F588B100097D1DA /* SmartHomeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22741C371F588B100097D1DA /* SmartHomeTests.swift */; };
@@ -34,10 +34,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		225F96FC1F79A2AE00F65AEF /* MainController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainController.swift; sourceTree = "<group>"; };
 		22741C1F1F588B100097D1DA /* SmartHome.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmartHome.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		22741C221F588B100097D1DA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		22741C241F588B100097D1DA /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		22741C271F588B100097D1DA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		22741C241F588B100097D1DA /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		22741C291F588B100097D1DA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		22741C2C1F588B100097D1DA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		22741C2E1F588B100097D1DA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -74,6 +74,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		225F96FE1F79A2BB00F65AEF /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				22741C241F588B100097D1DA /* LoginController.swift */,
+				225F96FC1F79A2AE00F65AEF /* MainController.swift */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
 		22741C161F588B0F0097D1DA = {
 			isa = PBXGroup;
 			children = (
@@ -97,9 +106,8 @@
 		22741C211F588B100097D1DA /* SmartHome */ = {
 			isa = PBXGroup;
 			children = (
+				225F96FE1F79A2BB00F65AEF /* Controllers */,
 				22741C221F588B100097D1DA /* AppDelegate.swift */,
-				22741C241F588B100097D1DA /* ViewController.swift */,
-				22741C261F588B100097D1DA /* Main.storyboard */,
 				22741C291F588B100097D1DA /* Assets.xcassets */,
 				22741C2B1F588B100097D1DA /* LaunchScreen.storyboard */,
 				22741C2E1F588B100097D1DA /* Info.plist */,
@@ -234,7 +242,6 @@
 			files = (
 				22741C2D1F588B100097D1DA /* LaunchScreen.storyboard in Resources */,
 				22741C2A1F588B100097D1DA /* Assets.xcassets in Resources */,
-				22741C281F588B100097D1DA /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -259,7 +266,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				22741C251F588B100097D1DA /* ViewController.swift in Sources */,
+				22741C251F588B100097D1DA /* LoginController.swift in Sources */,
+				225F96FD1F79A2AE00F65AEF /* MainController.swift in Sources */,
 				22741C231F588B100097D1DA /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -296,14 +304,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		22741C261F588B100097D1DA /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				22741C271F588B100097D1DA /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		22741C2B1F588B100097D1DA /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -403,6 +403,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = SmartHome/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Rys.SmartHome;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -414,6 +415,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = SmartHome/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Rys.SmartHome;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -487,6 +489,7 @@
 				22741C491F588B100097D1DA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		22741C4A1F588B100097D1DA /* Build configuration list for PBXNativeTarget "SmartHomeTests" */ = {
 			isa = XCConfigurationList;
@@ -495,6 +498,7 @@
 				22741C4C1F588B100097D1DA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		22741C4D1F588B100097D1DA /* Build configuration list for PBXNativeTarget "SmartHomeUITests" */ = {
 			isa = XCConfigurationList;
@@ -503,6 +507,7 @@
 				22741C4F1F588B100097D1DA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

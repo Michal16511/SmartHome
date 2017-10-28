@@ -8,30 +8,39 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class LoginController: UIViewController {
 
     private let screenSize = UIScreen.mainScreen().bounds
-    
-    var welcomeHome: UIView!
-    var loginArea: UIView!
-    var footer: UIView!
-    var poweredBy: UIView!
-    var userIcon: UIView!
-    var inputLogin: UIView!
-    var inputPassword: UIView!
-    var inputAddress: UIView!
-    var submit: UIButton!
-    var login: UITextField!
-    var password: UITextField!
-    var address: UITextField!
+    private var welcomeHome: UIView!
+    private var loginArea: UIView!
+    private var footer: UIView!
+    private var poweredBy: UIView!
+    private var userIcon: UIView!
+    private var inputLogin: UIView!
+    private var inputPassword: UIView!
+    private var inputAddress: UIView!
+    private var submit: UIButton!
+    private var login: UITextField!
+    private var password: UITextField!
+    private var address: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.view.backgroundColor = UIColor(patternImage: UIImage(named: "backgroud_city.png")!)
         addViews()
+        
     }
-
+    
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return UIStatusBarStyle.LightContent
+    }
+    
+    func submitAction() {
+        let vc = MainController()
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -73,7 +82,7 @@ class ViewController: UIViewController {
         let mainSpacing = screenSize.height/8
         let heightOfLoginArea = screenSize.height/8*3
         let widthOfLoginArea = screenSize.width/4*3
-        loginArea = UIView(frame: CGRect(x: screenSize.width/8, y: mainSpacing + heightOfWelcomeHome + mainSpacing/2, width: widthOfLoginArea, height: heightOfLoginArea))
+        loginArea = UIView(frame: CGRect(x: screenSize.width/8, y: mainSpacing + heightOfWelcomeHome + mainSpacing/2, width: widthOfLoginArea, height: heightOfLoginArea + mainSpacing))
         let loginAreaImage = UIImageView(frame: CGRectMake(0,0,widthOfLoginArea,heightOfLoginArea + mainSpacing))
         loginAreaImage.image = UIImage(named: "loginarea.png")
         loginArea.addSubview(loginAreaImage)
@@ -158,11 +167,10 @@ class ViewController: UIViewController {
         let widthOfSubmit = CGFloat(80)
         let heightOfSubmit = CGFloat(30)
         submit = UIButton(frame: CGRect(x: widthOfLoginArea / 2 - widthOfSubmit / 2, y: spacing + heightOfUserIcon + spacing + 3 * heightOfInput + spacing - 2, width: widthOfSubmit, height: heightOfSubmit))
-
+        submit.addTarget(self, action: "submitAction", forControlEvents: UIControlEvents.TouchUpInside)
         submit.setTitle("Submit", forState: .Normal)
         
         loginArea.addSubview(submit)
-        
         view.addSubview(loginArea)
     }
 }
