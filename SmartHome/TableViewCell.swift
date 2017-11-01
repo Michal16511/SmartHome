@@ -1,0 +1,81 @@
+//
+//  TableViewCell.swift
+//  SmartHome
+//
+//  Created by MacOS on 31/10/17.
+//  Copyright © 2017 Michał Ryś. All rights reserved.
+//
+
+import UIKit
+
+class TableViewCell: UITableViewCell {
+
+    let screenSize: CGRect
+    var picture: UIImageView
+    var label: UILabel
+    var backgroudImage: UIImageView
+    
+    init(labelText: String, imageName: String){
+        label = UILabel()
+        picture = UIImageView()
+        screenSize = UIScreen.mainScreen().bounds
+        backgroudImage = UIImageView()
+        super.init(style: .Default, reuseIdentifier: "SettingCell")
+        setUpCell(labelText, imageName: imageName)
+    }
+    
+    init(){
+        label = UILabel()
+        picture = UIImageView()
+        screenSize = UIScreen.mainScreen().bounds
+        backgroudImage = UIImageView()
+        super.init(style: .Default, reuseIdentifier: "SettingCell")
+    }
+    
+     required init?(coder aDecoder: NSCoder) {
+         fatalError("init(coder:) has not been implemented")
+     }
+    
+    func setUpCell(labelText: String, imageName: String) {
+        
+        
+//        backgroudImage.image = UIImage(named: "main_menu_item_click.png")
+        backgroudImage.backgroundColor = UIColor.blackColor()
+        self.contentView.addSubview(backgroudImage)
+        
+        label.text = labelText
+        label.font = label.font.fontWithSize(40)
+        label.adjustsFontSizeToFitWidth = true
+        label.minimumScaleFactor = 0.2
+        label.numberOfLines = 0
+        label.textColor = UIColor(red: 255.0, green:  255.0, blue: 255.0, alpha: 255.0)
+        self.contentView.addSubview(label)
+        
+        picture.image = UIImage(named: imageName)
+        self.contentView.addSubview(picture)
+        
+        setupContstraints()
+    }
+    
+    func setupContstraints(){
+        
+        backgroudImage.translatesAutoresizingMaskIntoConstraints = false
+        backgroudImage.topAnchor.constraintEqualToAnchor(self.topAnchor).active = true
+        backgroudImage.bottomAnchor.constraintEqualToAnchor(self.bottomAnchor).active = true
+        backgroudImage.leadingAnchor.constraintEqualToAnchor(self.leadingAnchor).active = true
+        backgroudImage.trailingAnchor.constraintEqualToAnchor(self.trailingAnchor).active = true
+        
+        picture.translatesAutoresizingMaskIntoConstraints = false
+        picture.topAnchor.constraintEqualToAnchor(self.topAnchor, constant:  5).active = true
+        picture.bottomAnchor.constraintEqualToAnchor(self.bottomAnchor, constant: -5).active = true
+        picture.leadingAnchor.constraintEqualToAnchor(self.leadingAnchor, constant: screenSize.width * 0.05).active = true
+        picture.trailingAnchor.constraintEqualToAnchor(self.leadingAnchor, constant: screenSize.width * 0.18).active = true
+        
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.topAnchor.constraintEqualToAnchor(self.topAnchor, constant: 5).active = true
+        label.bottomAnchor.constraintEqualToAnchor(self.bottomAnchor, constant: -5).active = true
+        label.leadingAnchor.constraintEqualToAnchor(picture.trailingAnchor, constant: screenSize.width * 0.5).active = true
+        label.trailingAnchor.constraintEqualToAnchor(self.trailingAnchor).active = true
+        
+    }
+}
