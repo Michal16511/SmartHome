@@ -39,12 +39,11 @@ class TableViewCell: UITableViewCell {
     func setUpCell(labelText: String, imageName: String) {
         
         
-//        backgroudImage.image = UIImage(named: "main_menu_item_click.png")
-        backgroudImage.backgroundColor = UIColor.blackColor()
+        self.backgroundColor = UIColor(patternImage: UIImage(named: "backgroud_city.png")!)
         self.contentView.addSubview(backgroudImage)
         
         label.text = labelText
-        label.font = label.font.fontWithSize(40)
+        label.font = label.font.fontWithSize(20)
         label.adjustsFontSizeToFitWidth = true
         label.minimumScaleFactor = 0.2
         label.numberOfLines = 0
@@ -66,16 +65,16 @@ class TableViewCell: UITableViewCell {
         backgroudImage.trailingAnchor.constraintEqualToAnchor(self.trailingAnchor).active = true
         
         picture.translatesAutoresizingMaskIntoConstraints = false
-        picture.topAnchor.constraintEqualToAnchor(self.topAnchor, constant:  5).active = true
+        picture.topAnchor.constraintEqualToAnchor(self.topAnchor, constant:  10).active = true
         picture.bottomAnchor.constraintEqualToAnchor(self.bottomAnchor, constant: -5).active = true
-        picture.leadingAnchor.constraintEqualToAnchor(self.leadingAnchor, constant: screenSize.width * 0.05).active = true
-        picture.trailingAnchor.constraintEqualToAnchor(self.leadingAnchor, constant: screenSize.width * 0.18).active = true
+        picture.leadingAnchor.constraintEqualToAnchor(self.leadingAnchor, constant: screenSize.width * 0.08).active = true
+        picture.trailingAnchor.constraintEqualToAnchor(self.leadingAnchor, constant: screenSize.width * 0.2).active = true
         
         label.translatesAutoresizingMaskIntoConstraints = false
         label.topAnchor.constraintEqualToAnchor(self.topAnchor, constant: 5).active = true
         label.bottomAnchor.constraintEqualToAnchor(self.bottomAnchor, constant: -5).active = true
-        label.leadingAnchor.constraintEqualToAnchor(picture.trailingAnchor, constant: screenSize.width * 0.5).active = true
-        label.trailingAnchor.constraintEqualToAnchor(self.trailingAnchor).active = true
+        label.leadingAnchor.constraintEqualToAnchor(picture.trailingAnchor, constant: screenSize.width * 0.3).active = true
+        label.trailingAnchor.constraintEqualToAnchor(self.trailingAnchor, constant: -screenSize.width * 0.1).active = true
         
     }
 }

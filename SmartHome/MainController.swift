@@ -58,9 +58,9 @@ class MainController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         tableView.dataSource = self
         tableView.delegate = self
-        self.tableView.registerClass(TableViewCell.self as AnyClass, forCellReuseIdentifier: "Cell")
-        tableView.backgroundColor = UIColor.blackColor()
-        self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
+        tableView.registerClass(TableViewCell.self as AnyClass, forCellReuseIdentifier: "Cell")
+        tableView.backgroundColor = UIColor.clearColor()
+        tableView.separatorStyle = UITableViewCellSeparatorStyle.None
         
         self.view.backgroundColor = UIColor(patternImage: UIImage(named: "backgroud_city.png")!)
         addViews()
@@ -129,7 +129,7 @@ class MainController: UIViewController, UITableViewDelegate, UITableViewDataSour
         menuLabel.translatesAutoresizingMaskIntoConstraints = false
         menuLabel.topAnchor.constraintEqualToAnchor(titleBar.topAnchor, constant: 10).active = true
         menuLabel.bottomAnchor.constraintEqualToAnchor(titleBar.bottomAnchor, constant: -10).active = true
-        menuLabel.centerXAnchor.constraintEqualToAnchor(titleBar.centerXAnchor).active = true
+        menuLabel.centerXAnchor.constraintEqualToAnchor(titleBar.centerXAnchor, constant: screenSize.width * 0.08).active = true
 
         footerDescription.translatesAutoresizingMaskIntoConstraints = false
         footerDescription.topAnchor.constraintEqualToAnchor(footer.topAnchor, constant: 15).active = true
