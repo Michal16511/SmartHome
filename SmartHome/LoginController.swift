@@ -37,7 +37,7 @@ class LoginController: UIViewController {
     }
     
     func submitAction() {
-        let vc = MainController()
+        let vc = MenuController()
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

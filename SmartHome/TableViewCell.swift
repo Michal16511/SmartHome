@@ -12,8 +12,9 @@ class TableViewCell: UITableViewCell {
 
     let screenSize: CGRect
     var picture: UIImageView
-    var label: UILabel
+    internal var label: UILabel
     var backgroudImage: UIImageView
+    var isTurnOn = false
     
     init(labelText: String, imageName: String){
         label = UILabel()
@@ -76,5 +77,16 @@ class TableViewCell: UITableViewCell {
         label.leadingAnchor.constraintEqualToAnchor(picture.trailingAnchor, constant: screenSize.width * 0.3).active = true
         label.trailingAnchor.constraintEqualToAnchor(self.trailingAnchor, constant: -screenSize.width * 0.1).active = true
         
+    }
+    
+    internal func toogleLight(){
+        
+        if(!isTurnOn){
+            isTurnOn = true
+            picture.image = UIImage(named: "lamp_on.png")
+        }else{
+            picture.image = UIImage(named: "lamp_off.png")
+            isTurnOn = false
+        }
     }
 }

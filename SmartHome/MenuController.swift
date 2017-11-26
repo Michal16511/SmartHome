@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MainController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class MenuController: UIViewController{
 
     private let screenSize = UIScreen.mainScreen().bounds
     private var top = UIView()
@@ -17,54 +17,24 @@ class MainController: UIViewController, UITableViewDelegate, UITableViewDataSour
     private var topImage = UIImageView()
     private var poweredBy = UIImageView()
     private var footerImage = UIImageView()
+    private var footerDescription = UIImageView()
+    private var containerView = UIView()
+    private var mainMenu = MainMenuViewController()
     private var titleBar = UIView()
     private var titleWindow = UIImageView()
-    private var systemState = UIImageView()
-    private var sunAndRain = UIImageView()
     private var titleBarImage = UIImageView()
     private var menuLabel = UILabel()
-    private var footerDescription = UIImageView()
-    
-    private var tableView = UITableView()
-    
-    private var cells: [TableViewCell] = [TableViewCell(labelText: "Lights", imageName: "main_menu_lamps.png"),
-        TableViewCell(labelText: "Temperatures", imageName: "main_menu_temperatures.png"),
-        TableViewCell(labelText: "Alarms", imageName: "main_menu_alarms.png"),
-        TableViewCell(labelText: "Shutters", imageName: "main_menu_shutters.png"),
-        TableViewCell(labelText: "Climate", imageName: "heating_icon.png"),
-        TableViewCell(labelText: "Voice control", imageName: "main_menu_voice.png"),
-        TableViewCell(labelText: "Configuration", imageName: "main_menu_configuration.png"),
-        TableViewCell(labelText: "Bla bla bla", imageName: "main_menu_temperatures.png")]
-    
-    func tableView(tableView: UITableView, numberOfSections section: Int) -> Int {
-        return 1
-    }
-    
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 8
-    }
-    
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
-        return cells[indexPath.row]
-    }
-    
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return screenSize.height * 0.09
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.registerClass(TableViewCell.self as AnyClass, forCellReuseIdentifier: "Cell")
-        tableView.backgroundColor = UIColor.clearColor()
-        tableView.separatorStyle = UITableViewCellSeparatorStyle.None
+        addChildViewController(mainMenu)
+        mainMenu.view.translatesAutoresizingMaskIntoConstraints = false
         
         self.view.backgroundColor = UIColor(patternImage: UIImage(named: "backgroud_city.png")!)
         addViews()
         setupConstraints()
+        mainMenu.didMoveToParentViewController(self)
     }
     
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
@@ -108,6 +78,12 @@ class MainController: UIViewController, UITableViewDelegate, UITableViewDataSour
         poweredBy.topAnchor.constraintEqualToAnchor(top.topAnchor).active = true
         poweredBy.bottomAnchor.constraintEqualToAnchor(top.bottomAnchor).active = true
         
+        footerDescription.translatesAutoresizingMaskIntoConstraints = false
+        footerDescription.topAnchor.constraintEqualToAnchor(footer.topAnchor, constant: 15).active = true
+        footerDescription.bottomAnchor.constraintEqualToAnchor(footer.bottomAnchor, constant: -15).active = true
+        footerDescription.leadingAnchor.constraintEqualToAnchor(footer.leadingAnchor, constant: 50).active = true
+        footerDescription.trailingAnchor.constraintEqualToAnchor(footer.trailingAnchor, constant: -50).active = true
+        
         titleBar.translatesAutoresizingMaskIntoConstraints = false
         titleBar.leadingAnchor.constraintEqualToAnchor(view.leadingAnchor).active = true
         titleBar.trailingAnchor.constraintEqualToAnchor(view.trailingAnchor).active = true
@@ -130,23 +106,21 @@ class MainController: UIViewController, UITableViewDelegate, UITableViewDataSour
         menuLabel.topAnchor.constraintEqualToAnchor(titleBar.topAnchor, constant: 10).active = true
         menuLabel.bottomAnchor.constraintEqualToAnchor(titleBar.bottomAnchor, constant: -10).active = true
         menuLabel.centerXAnchor.constraintEqualToAnchor(titleBar.centerXAnchor, constant: screenSize.width * 0.08).active = true
-
-        footerDescription.translatesAutoresizingMaskIntoConstraints = false
-        footerDescription.topAnchor.constraintEqualToAnchor(footer.topAnchor, constant: 15).active = true
-        footerDescription.bottomAnchor.constraintEqualToAnchor(footer.bottomAnchor, constant: -15).active = true
-        footerDescription.leadingAnchor.constraintEqualToAnchor(footer.leadingAnchor, constant: 50).active = true
-        footerDescription.trailingAnchor.constraintEqualToAnchor(footer.trailingAnchor, constant: -50).active = true
         
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.topAnchor.constraintEqualToAnchor(titleBar.bottomAnchor).active = true
-        tableView.bottomAnchor.constraintEqualToAnchor(footer.topAnchor).active = true
-        tableView.leadingAnchor.constraintEqualToAnchor(view.leadingAnchor).active = true
-        tableView.trailingAnchor.constraintEqualToAnchor(view.trailingAnchor).active = true
+        containerView.translatesAutoresizingMaskIntoConstraints = false
+        containerView.topAnchor.constraintEqualToAnchor(titleBar.bottomAnchor).active = true
+        containerView.bottomAnchor.constraintEqualToAnchor(footer.topAnchor).active = true
+        containerView.leadingAnchor.constraintEqualToAnchor(view.leadingAnchor, constant: -1).active = true
+        containerView.trailingAnchor.constraintEqualToAnchor(view.trailingAnchor).active = true
+        
+        mainMenu.view.topAnchor.constraintEqualToAnchor(containerView.topAnchor).active = true
+        mainMenu.view.bottomAnchor.constraintEqualToAnchor(containerView.bottomAnchor).active = true
+        mainMenu.view.leadingAnchor.constraintEqualToAnchor(containerView.leadingAnchor).active = true
+        mainMenu.view.trailingAnchor.constraintEqualToAnchor(containerView.trailingAnchor).active = true
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     func menuBtnAction() {
@@ -168,17 +142,11 @@ class MainController: UIViewController, UITableViewDelegate, UITableViewDataSour
         menuButton.addTarget(self, action: "menuBtnAction", forControlEvents: UIControlEvents.TouchUpInside)
         top.addSubview(menuButton)
         
-        footerImage.image = UIImage(named: "powered_background.png")
-        footer.addSubview(footerImage)
-        view.addSubview(footer)
-        
         titleBarImage.image = UIImage(named: "powered_background.png")
         titleBar.addSubview(titleBarImage)
         view.addSubview(titleBar)
-        
         titleWindow.image = UIImage(named: "main_menu_icon.png")
         titleBar.addSubview(titleWindow)
-        
         menuLabel.text = "Menu"
         menuLabel.font = menuLabel.font.fontWithSize(40)
         menuLabel.adjustsFontSizeToFitWidth = true
@@ -186,17 +154,18 @@ class MainController: UIViewController, UITableViewDelegate, UITableViewDataSour
         menuLabel.numberOfLines = 0
         menuLabel.textColor = UIColor(red: 255.0, green:  255.0, blue: 255.0, alpha: 255.0)
         titleBar.addSubview(menuLabel)
+
         
-        systemState.image = UIImage(named: "system_state.png")
-        titleBar.addSubview(systemState)
-        
-        sunAndRain.image = UIImage(named: "sun_button.png")
-        titleBar.addSubview(sunAndRain)
+        footerImage.image = UIImage(named: "powered_background.png")
+        footer.addSubview(footerImage)
+        view.addSubview(footer)
         
         footerDescription.image = UIImage(named: "powered_smart_home.png")
         footer.addSubview(footerDescription)
         
-        view.addSubview(tableView)
+        containerView.addSubview(mainMenu.view)
+        view.addSubview(containerView)
+        
     }
     
 }

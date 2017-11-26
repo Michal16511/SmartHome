@@ -6,6 +6,8 @@ target 'SmartHome' do
   use_frameworks!
 
   # Pods for SmartHome
+  
+    pod 'RealmSwift', '~> 0.102.1'
 
   target 'SmartHomeTests' do
     inherit! :search_paths
@@ -16,5 +18,4 @@ target 'SmartHome' do
     inherit! :search_paths
     # Pods for testing
   end
-
 end
