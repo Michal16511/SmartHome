@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 class MenuController: UIViewController{
 
@@ -35,6 +36,12 @@ class MenuController: UIViewController{
         addViews()
         setupConstraints()
         mainMenu.didMoveToParentViewController(self)
+        
+       
+        
+        
+        populateDefaultLights()
+        
     }
     
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
@@ -166,6 +173,28 @@ class MenuController: UIViewController{
         containerView.addSubview(mainMenu.view)
         view.addSubview(containerView)
         
+    }
+    
+    func populateDefaultLights() {
+        
+        let realm = try! Realm()
+        let lights: Results<Light> = { realm.objects(Light) }()
+        
+        if lights.count == 0 {
+            
+            try! realm.write() {
+                
+                let defaultLights = ["Swiatlo kuchnia", "Swiatlo salon", "Swiatlo korytarz", "Swiatlo lazienka",
+                    "Swiatlo sypialnia", "Swiatlo piwnica"]
+                
+                for light in defaultLights {
+                    let newLight = Light()
+                    newLight.imageName = "lamp_off.png"
+                    newLight.name = light
+                    realm.add(newLight)
+                }
+            }
+        }
     }
     
 }

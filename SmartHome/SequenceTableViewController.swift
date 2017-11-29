@@ -2,38 +2,37 @@
 //  SequenceTableViewController.swift
 //  SmartHome
 //
-//  Created by MacOS on 25/11/17.
+//  Created by MacOS on 29/11/17.
 //  Copyright © 2017 Michał Ryś. All rights reserved.
 //
 
-import UIKit
+import Foundation
+import RealmSwift
 
 class SequenceTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
-
+    
     private let screenSize = UIScreen.mainScreen().bounds
     private var tableView = UITableView()
     private var tableViewContainer = UIView()
     
-    private var cells: [SequenceTableViewCell] = [SequenceTableViewCell()]
+    private var cells: [SequenceTableViewCell] = []
     
     func tableView(tableView: UITableView, numberOfSections section: Int) -> Int {
         return 1
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3 + cells.count
+        return 4 + cells.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         if (indexPath.row == 0){
             return TableViewCell(labelText: "Main menu", imageName: "main_menu_configuration.png")
-        } else if (indexPath.row != 0 && indexPath.row < 1 + cells.count){
-            return cells[indexPath.row - 1]
-        } else if (indexPath.row == 1 + cells.count){
-            return TableViewCell( labelText: "Add action", imageName: "add_grey.png")
-        } else {
-            return TableViewCell(labelText: "Submit", imageName: "submit_grey.png")
+        } else if (indexPath.row == 1) {
+            return TableViewCell(labelText: "Add new sequence", imageName: "add_grey.png")
+        } else if (indexPath.row > 1 && indexPath.row < 1 + cells.count){
+            return cells[indexPath.row - 2]
         }
         
     }
@@ -45,10 +44,13 @@ class SequenceTableViewController: UIViewController, UITableViewDelegate, UITabl
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if (indexPath.row == 0){
             setupNewViewController(MainMenuViewController())
-        } else if (indexPath.row != 0 && indexPath.row < 1 + cells.count){
+        } else if (indexPath.row == 1) {
+            setupNewViewController(SequenceDetailsTableViewController())
+        } else if (indexPath.row > 1 && indexPath.row < 1 + cells.count){
             deleteTapped(indexPath.row - 1)
         } else if (indexPath.row == 2 + cells.count){
             submit()
+            tableView.deselectRowAtIndexPath(indexPath, animated: true)
         } else{
             addAction()
         }
@@ -84,7 +86,7 @@ class SequenceTableViewController: UIViewController, UITableViewDelegate, UITabl
         tableView.bottomAnchor.constraintEqualToAnchor(tableViewContainer.bottomAnchor).active = true
         tableView.leadingAnchor.constraintEqualToAnchor(tableViewContainer.leadingAnchor).active = true
         tableView.trailingAnchor.constraintEqualToAnchor(tableViewContainer.trailingAnchor).active = true
-
+        
     }
     
     func addViews(){
@@ -116,28 +118,31 @@ class SequenceTableViewController: UIViewController, UITableViewDelegate, UITabl
     
     func submit(){
         
-//        for cell in cells{
-//            
-//            var action = cell.getAction() as String
-//            action = action.uppercaseString
-//            
-//            for light in lights {
-//                
-//                if ( action.containsString( light.name.uppercaseString ) )
-//            }
-//            
-//            if ( action.containsString( "wylacz".uppercaseString )) {
-//                
-//            } else {
-//                
-//            }
-//            
-//        }
+        let realm = try! Realm()
         
-    }
-    
-    func addAction(){
-        cells.append(SequenceTableViewCell())
-        tableView.reloadData()
+        for cell in cells{
+            
+            var task = cell.getAction() as String
+            task = task.uppercaseString
+            
+            let taskArr = task.characters.split{$0 == " "}.map(String.init)
+            let lightName = "Swiatlo " + taskArr[1].lowercaseString
+            
+            if ( taskArr[0].containsString( "wylacz".uppercaseString )) {
+                
+                let light = realm.objects(Light).filter("name = %@", lightName).first
+                try! realm.write {
+                    light!.isTurnOn = false
+                    light!.imageName = "lamp_off.png"
+                }
+            } else {
+                
+                let light = realm.objects(Light).filter("name = %@", lightName).first
+                try! realm.write {
+                    light!.isTurnOn = true
+                    light!.imageName = "lamp_on.png"
+                }
+            }
+        }
     }
 }

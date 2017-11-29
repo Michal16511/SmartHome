@@ -1,37 +1,42 @@
 //
-//  TemperaturesViewController.swift
+//  SequenceTableViewController.swift
 //  SmartHome
 //
-//  Created by MacOS on 02/11/17.
+//  Created by MacOS on 25/11/17.
 //  Copyright © 2017 Michał Ryś. All rights reserved.
 //
 
 import UIKit
 import RealmSwift
 
-class LightViewController: UIViewController, UITableViewDelegate, UITableViewDataSource  {
-    
+class SequenceDetailsTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
+
     private let screenSize = UIScreen.mainScreen().bounds
-    private let tableViewContainer = UIView()
     private var tableView = UITableView()
-    private var titleBar = UIView()
-    private var titleWindow = UIImageView()
-    private var titleBarImage = UIImageView()
-    private var menuLabel = UILabel()
+    private var tableViewContainer = UIView()
     
-    private var cells: [TableViewCell] = [TableViewCell(labelText: "Main menu", imageName: "main_menu_configuration.png")]
+    private var cells: [SequenceElementTableViewCell] = [SequenceElementTableViewCell()]
     
     func tableView(tableView: UITableView, numberOfSections section: Int) -> Int {
         return 1
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return cells.count
+        return 3 + cells.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        return cells[indexPath.row]
+        if (indexPath.row == 0){
+            return TableViewCell(labelText: "Main menu", imageName: "main_menu_configuration.png")
+        } else if (indexPath.row != 0 && indexPath.row < 1 + cells.count){
+            return cells[indexPath.row - 1]
+        } else if (indexPath.row == 1 + cells.count){
+            return TableViewCell( labelText: "Add action", imageName: "add_grey.png")
+        } else {
+            return TableViewCell(labelText: "Submit", imageName: "submit_grey.png")
+        }
+        
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -39,30 +44,31 @@ class LightViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
-        if(cells[indexPath.row].label.text == "Main menu"){
+        if (indexPath.row == 0){
             setupNewViewController(MainMenuViewController())
-        }else{
-            cells[indexPath.row] = updateLight(cells[indexPath.row])
-            tableView.reloadData()
+        } else if (indexPath.row != 0 && indexPath.row < 1 + cells.count){
+            deleteTapped(indexPath.row - 1)
+        } else if (indexPath.row == 2 + cells.count){
+            submit()
+            tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        } else{
+            addAction()
         }
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
     
     override func viewWillAppear(animated: Bool) {
-        tableView.backgroundView?.backgroundColor = UIColor.clearColor()
         view.backgroundColor = UIColor.clearColor()
         tableView.backgroundColor = UIColor.clearColor()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         tableView.dataSource = self
         tableView.delegate = self
         tableView.registerClass(TableViewCell.self as AnyClass, forCellReuseIdentifier: "Cell")
         tableView.separatorStyle = UITableViewCellSeparatorStyle.None
         
-        loadLights()
         addViews()
         setupConstraints()
     }
@@ -80,6 +86,7 @@ class LightViewController: UIViewController, UITableViewDelegate, UITableViewDat
         tableView.bottomAnchor.constraintEqualToAnchor(tableViewContainer.bottomAnchor).active = true
         tableView.leadingAnchor.constraintEqualToAnchor(tableViewContainer.leadingAnchor).active = true
         tableView.trailingAnchor.constraintEqualToAnchor(tableViewContainer.trailingAnchor).active = true
+
     }
     
     func addViews(){
@@ -104,36 +111,45 @@ class LightViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.dismissViewControllerAnimated(true, completion: {})
     }
     
-    func loadLights(){
-        
-        let realm = try! Realm()
-        let lights: Results<Light> = { realm.objects(Light) }()
-        
-        if lights.count != 0 {
-            
-            for light in lights {
-                let newCell = TableViewCell(labelText: light.name, imageName: light.imageName)
-                cells.append(newCell)
-            }
-        }
+    func deleteTapped(index: Int) {
+        cells.removeAtIndex(index)
+        tableView.reloadData()
     }
-
-    func updateLight(cell: TableViewCell) -> TableViewCell{
+    
+    func submit(){
         
         let realm = try! Realm()
-        let light = realm.objects(Light).filter("name = %@", cell.label.text!).first
         
-        try! realm.write {
+        for cell in cells{
             
-            if(light!.isTurnOn){
-                light!.isTurnOn = false
-                light!.imageName = "lamp_off.png"
-            }else{
-                light!.imageName = "lamp_on.png"
-                light!.isTurnOn = true
+            var task = cell.getAction() as String
+            task = task.uppercaseString
+            
+            let taskArr = task.characters.split{$0 == " "}.map(String.init)
+            let lightName = "Swiatlo " + taskArr[1].lowercaseString
+            
+            if ( taskArr[0].containsString( "wylacz".uppercaseString )) {
+                
+                let light = realm.objects(Light).filter("name = %@", lightName).first
+                try! realm.write {
+                    light!.isTurnOn = false
+                    light!.imageName = "lamp_off.png"
+                }
+            } else {
+                
+                let light = realm.objects(Light).filter("name = %@", lightName).first
+                try! realm.write {
+                    light!.isTurnOn = true
+                    light!.imageName = "lamp_on.png"
+                }
             }
-            cell.picture.image = UIImage(named: light!.imageName)
+            
         }
-        return cell
+        
+    }
+    
+    func addAction(){
+        cells.append(SequenceTableViewCell())
+        tableView.reloadData()
     }
 }

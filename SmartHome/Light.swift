@@ -7,8 +7,10 @@
 //
 
 import Foundation
+import RealmSwift
 
-class Light{
-    private var name: String = ""
-    private var isTurnOn = false
+class Light: Object{
+    dynamic var name: String = ""
+    dynamic var isTurnOn = false
+    dynamic var imageName: String = ""
 }

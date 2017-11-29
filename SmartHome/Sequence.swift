@@ -7,6 +7,9 @@
 //
 
 import Foundation
+import RealmSwift
 
-class Sequence {
+class Sequence: Object {
+    
+    dynamic var name: String = ""
 }
