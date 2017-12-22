@@ -12,4 +12,5 @@ import RealmSwift
 class Sequence: Object {
     
     dynamic var name: String = ""
+    var action = List<Action>()
 }

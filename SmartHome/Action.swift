@@ -7,7 +7,8 @@
 //
 
 import Foundation
+import RealmSwift
 
-class Action {
-    private var name: String = ""
+class Action: Object {
+    dynamic var name: String = ""
 }

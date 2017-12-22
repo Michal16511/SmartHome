@@ -9,7 +9,7 @@
 import Foundation
 import RealmSwift
 
-class SequenceTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
+class SequenceTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, SequenceCellDelegate {
     
     private let screenSize = UIScreen.mainScreen().bounds
     private var tableView = UITableView()
@@ -22,7 +22,7 @@ class SequenceTableViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4 + cells.count
+        return 2 + cells.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -31,10 +31,10 @@ class SequenceTableViewController: UIViewController, UITableViewDelegate, UITabl
             return TableViewCell(labelText: "Main menu", imageName: "main_menu_configuration.png")
         } else if (indexPath.row == 1) {
             return TableViewCell(labelText: "Add new sequence", imageName: "add_grey.png")
-        } else if (indexPath.row > 1 && indexPath.row < 1 + cells.count){
+        } else {
+        //} else if (indexPath.row > 1 && indexPath.row < 1 + cells.count){
             return cells[indexPath.row - 2]
         }
-        
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -42,17 +42,12 @@ class SequenceTableViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if (indexPath.row == 0){
+        if ( indexPath.row == 0 ){
             setupNewViewController(MainMenuViewController())
-        } else if (indexPath.row == 1) {
-            setupNewViewController(SequenceDetailsTableViewController())
-        } else if (indexPath.row > 1 && indexPath.row < 1 + cells.count){
-            deleteTapped(indexPath.row - 1)
-        } else if (indexPath.row == 2 + cells.count){
-            submit()
-            tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        } else{
-            addAction()
+        } else if ( indexPath.row == 1)  {
+            setupNewViewController(SequenceDetailsTableViewController(sequence: Sequence()))
+        } else if ( indexPath.row > 1 ){
+            setupNewViewController(SequenceDetailsTableViewController(sequence: cells[indexPath.row - 2].sequence))
         }
     }
     
@@ -63,6 +58,7 @@ class SequenceTableViewController: UIViewController, UITableViewDelegate, UITabl
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        loadSequences()
         
         tableView.dataSource = self
         tableView.delegate = self
@@ -90,7 +86,6 @@ class SequenceTableViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     func addViews(){
-        
         view.addSubview(tableViewContainer)
         tableViewContainer.addSubview(tableView)
     }
@@ -111,38 +106,29 @@ class SequenceTableViewController: UIViewController, UITableViewDelegate, UITabl
         self.dismissViewControllerAnimated(true, completion: {})
     }
     
-    func deleteTapped(index: Int) {
-        cells.removeAtIndex(index)
-        tableView.reloadData()
+    func loadSequences() {
+        cells = []
+        let realm = try! Realm()
+        let sequences: Results<Sequence> = { realm.objects(Sequence) }()
+        
+        if sequences.count != 0 {
+            
+            for sequence in sequences {
+                let newCell = SequenceTableViewCell(sequence: sequence, delegate: self)
+                cells.append(newCell)
+            }
+        }
     }
     
-    func submit(){
+    func sequenceCellButtonPressed(sequence: Sequence?) {
         
         let realm = try! Realm()
         
-        for cell in cells{
-            
-            var task = cell.getAction() as String
-            task = task.uppercaseString
-            
-            let taskArr = task.characters.split{$0 == " "}.map(String.init)
-            let lightName = "Swiatlo " + taskArr[1].lowercaseString
-            
-            if ( taskArr[0].containsString( "wylacz".uppercaseString )) {
-                
-                let light = realm.objects(Light).filter("name = %@", lightName).first
-                try! realm.write {
-                    light!.isTurnOn = false
-                    light!.imageName = "lamp_off.png"
-                }
-            } else {
-                
-                let light = realm.objects(Light).filter("name = %@", lightName).first
-                try! realm.write {
-                    light!.isTurnOn = true
-                    light!.imageName = "lamp_on.png"
-                }
-            }
+        try! realm.write {
+            realm.delete(sequence!)
         }
+        
+        loadSequences()
+        tableView.reloadData()
     }
 }

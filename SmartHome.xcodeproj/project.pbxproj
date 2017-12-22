@@ -17,6 +17,8 @@
 		22741C431F588B100097D1DA /* SmartHomeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22741C421F588B100097D1DA /* SmartHomeUITests.swift */; };
 		22D1C7F51FCF43FB0021C9DC /* SequenceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D1C7F41FCF43FB0021C9DC /* SequenceTableViewCell.swift */; };
 		22D490681FA8E8EC0037B35A /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D490671FA8E8EC0037B35A /* TableViewCell.swift */; };
+		22D5C4251FD219F900BC3C10 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22741C221F588B100097D1DA /* AppDelegate.swift */; };
+		22D5C4271FD21C5400BC3C10 /* SequenceNameTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D5C4261FD21C5400BC3C10 /* SequenceNameTableViewCell.swift */; };
 		22D8777B1FC9EA8C00DF2B0D /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D8777A1FC9EA8C00DF2B0D /* Action.swift */; };
 		22D8777D1FC9EABC00DF2B0D /* Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D8777C1FC9EABC00DF2B0D /* Sequence.swift */; };
 		22D8A1AF1FAB686000866A96 /* LightViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D8A1AE1FAB686000866A96 /* LightViewController.swift */; };
@@ -64,6 +66,7 @@
 		22741C441F588B100097D1DA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		22D1C7F41FCF43FB0021C9DC /* SequenceTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SequenceTableViewCell.swift; sourceTree = "<group>"; };
 		22D490671FA8E8EC0037B35A /* TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
+		22D5C4261FD21C5400BC3C10 /* SequenceNameTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SequenceNameTableViewCell.swift; sourceTree = "<group>"; };
 		22D8777A1FC9EA8C00DF2B0D /* Action.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Action.swift; sourceTree = "<group>"; };
 		22D8777C1FC9EABC00DF2B0D /* Sequence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sequence.swift; sourceTree = "<group>"; };
 		22D8A1AE1FAB686000866A96 /* LightViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LightViewController.swift; sourceTree = "<group>"; };
@@ -205,6 +208,7 @@
 				22EE13B31FC9CEB100FC8E51 /* SequenceElementTableViewCell.swift */,
 				22D490671FA8E8EC0037B35A /* TableViewCell.swift */,
 				22D1C7F41FCF43FB0021C9DC /* SequenceTableViewCell.swift */,
+				22D5C4261FD21C5400BC3C10 /* SequenceNameTableViewCell.swift */,
 			);
 			name = TableViewCells;
 			sourceTree = "<group>";
@@ -518,6 +522,7 @@
 				22D8777D1FC9EABC00DF2B0D /* Sequence.swift in Sources */,
 				22D8777B1FC9EA8C00DF2B0D /* Action.swift in Sources */,
 				22741C251F588B100097D1DA /* LoginController.swift in Sources */,
+				22D5C4271FD21C5400BC3C10 /* SequenceNameTableViewCell.swift in Sources */,
 				22D9F7C81FCF369E0039E742 /* SequenceTableViewController.swift in Sources */,
 				22DCC16E1FAB45B400DBECF8 /* MainMenuViewController.swift in Sources */,
 				22D490681FA8E8EC0037B35A /* TableViewCell.swift in Sources */,
@@ -541,6 +546,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				22D5C4251FD219F900BC3C10 /* AppDelegate.swift in Sources */,
 				22741C431F588B100097D1DA /* SmartHomeUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

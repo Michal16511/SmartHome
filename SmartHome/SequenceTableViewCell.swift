@@ -9,37 +9,46 @@
 import UIKit
 import RealmSwift
 
+protocol SequenceCellDelegate: class {
+    func sequenceCellButtonPressed(sequence: Sequence?)
+}
+
 class SequenceTableViewCell: UITableViewCell {
     
-    let screenSize: CGRect
-    var backgroudImage: UIImageView
-    var deleteBtn: UIButton
+    weak var delegate: SequenceCellDelegate?
+    private let screenSize: CGRect
+    private var backgroudImage: UIImageView
+    private var deleteBtn: UIButton
     var actionLabel: UILabel
+    var sequence: Sequence
+    var buttonImage: UIImageView
     
-    init(name: String){
+    init(sequence: Sequence, delegate: SequenceCellDelegate){
         screenSize = UIScreen.mainScreen().bounds
         backgroudImage = UIImageView()
         actionLabel = UILabel()
-        deleteBtn = UIButton()
+        buttonImage = UIImageView()
+        deleteBtn = UIButton(type: .Custom)
+        self.delegate = delegate
+        self.sequence = sequence
         super.init(style: .Default, reuseIdentifier: "SettingCell")
-        setUpCell(name)
+        setUpCell()
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setUpCell(name: String) {
+    func setUpCell() {
         
         self.backgroundColor = UIColor(patternImage: UIImage(named: "backgroud_city.png")!)
         self.contentView.addSubview(backgroudImage)
         
-        action.textColor = UIColor(red: 255.0, green:  255.0, blue: 255.0, alpha: 255.0)
-        self.contentView.addSubview(action)
-        deleteBtn.imageView?.image = UIImage(named: "delete.png")
+        buttonImage.image = UIImage(named: "delete.png")
+        deleteBtn.addSubview(buttonImage)
         deleteBtn.addTarget(self, action: "deleteAction", forControlEvents: UIControlEvents.TouchUpInside)
         self.contentView.addSubview(deleteBtn)
-        actionLabel.text = name
+        actionLabel.text = sequence.name
         actionLabel.font = actionLabel.font.fontWithSize(20)
         actionLabel.adjustsFontSizeToFitWidth = true
         actionLabel.minimumScaleFactor = 0.2
@@ -61,26 +70,23 @@ class SequenceTableViewCell: UITableViewCell {
         actionLabel.topAnchor.constraintEqualToAnchor(self.topAnchor).active = true
         actionLabel.bottomAnchor.constraintEqualToAnchor(self.bottomAnchor).active = true
         actionLabel.leadingAnchor.constraintEqualToAnchor(self.leadingAnchor, constant: screenSize.width * 0.06).active = true
-        actionLabel.trailingAnchor.constraintEqualToAnchor(self.leadingAnchor, constant: screenSize.width * 0.4).active = true
+        actionLabel.trailingAnchor.constraintEqualToAnchor(self.leadingAnchor, constant: screenSize.width * 0.6).active = true
         
         deleteBtn.translatesAutoresizingMaskIntoConstraints = false
         deleteBtn.topAnchor.constraintEqualToAnchor(self.topAnchor, constant: 10).active = true
         deleteBtn.bottomAnchor.constraintEqualToAnchor(self.bottomAnchor, constant: -5).active = true
-        deleteBtn.leadingAnchor.constraintEqualToAnchor(self.trailingAnchor, constant: (-1) * screenSize.width * 0.2).active = true
+        deleteBtn.leadingAnchor.constraintEqualToAnchor(self.leadingAnchor, constant: screenSize.width * 0.8).active = true
         deleteBtn.trailingAnchor.constraintEqualToAnchor(self.trailingAnchor, constant: (-1) * screenSize.width * 0.05).active = true
+        
+        buttonImage.translatesAutoresizingMaskIntoConstraints = false
+        buttonImage.topAnchor.constraintEqualToAnchor(deleteBtn.topAnchor).active = true
+        buttonImage.bottomAnchor.constraintEqualToAnchor(deleteBtn.bottomAnchor).active = true
+        buttonImage.leadingAnchor.constraintEqualToAnchor(deleteBtn.leadingAnchor).active = true
+        buttonImage.trailingAnchor.constraintEqualToAnchor(deleteBtn.trailingAnchor).active = true
     }
     
-    internal func getAction() -> String{
-        return action.text!
-    }
     
     func deleteAction() {
-        
-        let realm = try! Realm()
-        let sequence = realm.objects(Sequence).filter("name = %@", actionLabel.text).first
-        
-        try! realm.write {
-            realm.delete(sequence)
-        }
+        delegate?.sequenceCellButtonPressed(self.sequence)
     }
 }

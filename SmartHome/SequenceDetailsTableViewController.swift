@@ -11,32 +11,55 @@ import RealmSwift
 
 class SequenceDetailsTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
 
-    private let screenSize = UIScreen.mainScreen().bounds
+    private var screenSize = UIScreen.mainScreen().bounds
     private var tableView = UITableView()
     private var tableViewContainer = UIView()
+    private var sequence: Sequence
+    private var sequenceNameCell: SequenceNameTableViewCell
+    private var cells: [SequenceElementTableViewCell] = []
     
-    private var cells: [SequenceElementTableViewCell] = [SequenceElementTableViewCell()]
+    convenience init(sequence: Sequence) {
+        self.init(nibName: nil, bundle: nil)
+        self.sequence = sequence
+        self.sequenceNameCell.sequence = self.sequence
+        self.sequenceNameCell.sequenceName.text = self.sequence.name
+    }
+    
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+        self.sequence = Sequence()
+        self.sequenceNameCell = SequenceNameTableViewCell()
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     func tableView(tableView: UITableView, numberOfSections section: Int) -> Int {
         return 1
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3 + cells.count
+        return 6 + cells.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         if (indexPath.row == 0){
             return TableViewCell(labelText: "Main menu", imageName: "main_menu_configuration.png")
-        } else if (indexPath.row != 0 && indexPath.row < 1 + cells.count){
-            return cells[indexPath.row - 1]
-        } else if (indexPath.row == 1 + cells.count){
+        } else if(indexPath.row == 1) {
+            return TableViewCell(labelText: "Sequences view", imageName: "list.png")
+        } else if (indexPath.row == 2) {
+            return sequenceNameCell
+        }else if (indexPath.row < 3 + cells.count){
+            return cells[indexPath.row - 3]
+        } else if (indexPath.row == 4 + cells.count){
             return TableViewCell( labelText: "Add action", imageName: "add_grey.png")
+        } else if (indexPath.row == 5 + cells.count){
+            return TableViewCell(labelText: "Save changes", imageName: "envelope.png")
         } else {
             return TableViewCell(labelText: "Submit", imageName: "submit_grey.png")
         }
-        
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -46,13 +69,20 @@ class SequenceDetailsTableViewController: UIViewController, UITableViewDelegate,
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if (indexPath.row == 0){
             setupNewViewController(MainMenuViewController())
-        } else if (indexPath.row != 0 && indexPath.row < 1 + cells.count){
-            deleteTapped(indexPath.row - 1)
-        } else if (indexPath.row == 2 + cells.count){
+        } else if (indexPath.row == 1) {
+            setupNewViewController(SequenceTableViewController())
+        } else if(indexPath.row == 2) {
+            tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        }else if (indexPath.row < 3 + cells.count){
+            deleteTapped(indexPath.row - 3)
+        } else if (indexPath.row == 4 + cells.count){
+            addAction(indexPath)
+        } else if (indexPath.row == 5 + cells.count){
+            save()
+            tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        } else {
             submit()
             tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        } else{
-            addAction()
         }
     }
     
@@ -64,6 +94,8 @@ class SequenceDetailsTableViewController: UIViewController, UITableViewDelegate,
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        loadActions()
+        
         tableView.dataSource = self
         tableView.delegate = self
         tableView.registerClass(TableViewCell.self as AnyClass, forCellReuseIdentifier: "Cell")
@@ -71,6 +103,14 @@ class SequenceDetailsTableViewController: UIViewController, UITableViewDelegate,
         
         addViews()
         setupConstraints()
+    }
+    
+    func loadActions(){
+        
+        for action in sequence.action {
+            let newCell = SequenceElementTableViewCell(action: action)
+            cells.append(newCell)
+        }
     }
     
     func setupConstraints(){
@@ -113,7 +153,30 @@ class SequenceDetailsTableViewController: UIViewController, UITableViewDelegate,
     
     func deleteTapped(index: Int) {
         cells.removeAtIndex(index)
-        tableView.reloadData()
+        tableView.beginUpdates()
+        tableView.deleteRowsAtIndexPaths([
+            NSIndexPath(forRow: 3 + index, inSection: 0)
+            ], withRowAnimation: .Automatic)
+        tableView.endUpdates()
+    }
+    
+    func save(){
+        
+        print(sequenceNameCell.sequenceName.text)
+    
+        let realm = try! Realm()
+        
+        try! realm.write() {
+            sequence.action.removeAll()
+            sequence.name = sequenceNameCell.getSequenceName()
+            for cell in cells{
+                let action = Action()
+                action.name = cell.actionNameField.text!
+                sequence.action.append(action)
+            }
+
+            realm.add(sequence)
+        }
     }
     
     func submit(){
@@ -123,33 +186,42 @@ class SequenceDetailsTableViewController: UIViewController, UITableViewDelegate,
         for cell in cells{
             
             var task = cell.getAction() as String
-            task = task.uppercaseString
-            
-            let taskArr = task.characters.split{$0 == " "}.map(String.init)
-            let lightName = "Swiatlo " + taskArr[1].lowercaseString
-            
-            if ( taskArr[0].containsString( "wylacz".uppercaseString )) {
+            if(task != "") {
                 
-                let light = realm.objects(Light).filter("name = %@", lightName).first
-                try! realm.write {
-                    light!.isTurnOn = false
-                    light!.imageName = "lamp_off.png"
+                task = task.uppercaseString
+            
+                let taskArr = task.characters.split{$0 == " "}.map(String.init)
+                let lightName = "Swiatlo " + taskArr[1].lowercaseString
+            
+                if ( taskArr[0].containsString( "wylacz".uppercaseString )) {
+                
+                    let light = realm.objects(Light).filter("name = %@", lightName).first
+                    try! realm.write {
+                        light!.isTurnOn = false
+                        light!.imageName = "lamp_off.png"
+                    }
+                } else {
+                
+                    let light = realm.objects(Light).filter("name = %@", lightName).first
+                    try! realm.write {
+                        light!.isTurnOn = true
+                        light!.imageName = "lamp_on.png"
+                    }
                 }
             } else {
-                
-                let light = realm.objects(Light).filter("name = %@", lightName).first
-                try! realm.write {
-                    light!.isTurnOn = true
-                    light!.imageName = "lamp_on.png"
-                }
+                let alert = UIAlertController(title: "Alert", message: "Action cannot be empty", preferredStyle: UIAlertControllerStyle.Alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil))
+                self.presentViewController(alert, animated: true, completion: nil)
             }
-            
         }
-        
     }
     
-    func addAction(){
-        cells.append(SequenceTableViewCell())
-        tableView.reloadData()
+    func addAction(index: NSIndexPath){
+        
+        cells.append(SequenceElementTableViewCell())
+        tableView.beginUpdates()
+        tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 3 + cells.count - 1, inSection: 0)], withRowAnimation: .Automatic)
+        tableView.deselectRowAtIndexPath(index, animated: true)
+        tableView.endUpdates()
     }
 }
