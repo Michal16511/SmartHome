@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		122D04DFCA7215105A36D07B /* Pods_SmartHomeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB92899902749FE9F9A7F001 /* Pods_SmartHomeTests.framework */; };
+		22002EA31FEDB2E600DD939E /* ShuttersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22002EA21FEDB2E600DD939E /* ShuttersViewController.swift */; };
+		22002EA51FEDB5A600DD939E /* ShuttersTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22002EA41FEDB5A600DD939E /* ShuttersTableViewCell.swift */; };
+		22002EA71FEDBA9000DD939E /* Shutter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22002EA61FEDBA9000DD939E /* Shutter.swift */; };
 		225F96FD1F79A2AE00F65AEF /* MenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 225F96FC1F79A2AE00F65AEF /* MenuController.swift */; };
 		22741C231F588B100097D1DA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22741C221F588B100097D1DA /* AppDelegate.swift */; };
 		22741C251F588B100097D1DA /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22741C241F588B100097D1DA /* LoginController.swift */; };
@@ -51,6 +54,9 @@
 /* Begin PBXFileReference section */
 		0696CCB61529AD2EA229FEB1 /* Pods-SmartHomeUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartHomeUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SmartHomeUITests/Pods-SmartHomeUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		108FECF74F3FA80DC4B6D645 /* Pods-SmartHomeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartHomeTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SmartHomeTests/Pods-SmartHomeTests.debug.xcconfig"; sourceTree = "<group>"; };
+		22002EA21FEDB2E600DD939E /* ShuttersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShuttersViewController.swift; sourceTree = "<group>"; };
+		22002EA41FEDB5A600DD939E /* ShuttersTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShuttersTableViewCell.swift; sourceTree = "<group>"; };
+		22002EA61FEDBA9000DD939E /* Shutter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Shutter.swift; sourceTree = "<group>"; };
 		225F96FC1F79A2AE00F65AEF /* MenuController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuController.swift; sourceTree = "<group>"; };
 		22741C1F1F588B100097D1DA /* SmartHome.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmartHome.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		22741C221F588B100097D1DA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -134,6 +140,7 @@
 				22DCC16D1FAB45B400DBECF8 /* MainMenuViewController.swift */,
 				22EE13B01FC9CDB400FC8E51 /* SequenceDetailsTableViewController.swift */,
 				22D9F7C71FCF369E0039E742 /* SequenceTableViewController.swift */,
+				22002EA21FEDB2E600DD939E /* ShuttersViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -198,6 +205,7 @@
 				22D8777A1FC9EA8C00DF2B0D /* Action.swift */,
 				22DDB9281FC9E83000ECAF83 /* Light.swift */,
 				22D8777C1FC9EABC00DF2B0D /* Sequence.swift */,
+				22002EA61FEDBA9000DD939E /* Shutter.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -209,6 +217,7 @@
 				22D490671FA8E8EC0037B35A /* TableViewCell.swift */,
 				22D1C7F41FCF43FB0021C9DC /* SequenceTableViewCell.swift */,
 				22D5C4261FD21C5400BC3C10 /* SequenceNameTableViewCell.swift */,
+				22002EA41FEDB5A600DD939E /* ShuttersTableViewCell.swift */,
 			);
 			name = TableViewCells;
 			sourceTree = "<group>";
@@ -518,15 +527,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				22D1C7F51FCF43FB0021C9DC /* SequenceTableViewCell.swift in Sources */,
+				22002EA31FEDB2E600DD939E /* ShuttersViewController.swift in Sources */,
 				22D8A1AF1FAB686000866A96 /* LightViewController.swift in Sources */,
 				22D8777D1FC9EABC00DF2B0D /* Sequence.swift in Sources */,
 				22D8777B1FC9EA8C00DF2B0D /* Action.swift in Sources */,
 				22741C251F588B100097D1DA /* LoginController.swift in Sources */,
 				22D5C4271FD21C5400BC3C10 /* SequenceNameTableViewCell.swift in Sources */,
+				22002EA71FEDBA9000DD939E /* Shutter.swift in Sources */,
 				22D9F7C81FCF369E0039E742 /* SequenceTableViewController.swift in Sources */,
 				22DCC16E1FAB45B400DBECF8 /* MainMenuViewController.swift in Sources */,
 				22D490681FA8E8EC0037B35A /* TableViewCell.swift in Sources */,
 				22EE13B11FC9CDB400FC8E51 /* SequenceDetailsTableViewController.swift in Sources */,
+				22002EA51FEDB5A600DD939E /* ShuttersTableViewCell.swift in Sources */,
 				225F96FD1F79A2AE00F65AEF /* MenuController.swift in Sources */,
 				22DDB9291FC9E83000ECAF83 /* Light.swift in Sources */,
 				22741C231F588B100097D1DA /* AppDelegate.swift in Sources */,

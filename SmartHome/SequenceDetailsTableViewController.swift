@@ -45,7 +45,7 @@ class SequenceDetailsTableViewController: UIViewController, UITableViewDelegate,
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        if (indexPath.row == 0){
+        if (indexPath.row == 0) {
             return TableViewCell(labelText: "Main menu", imageName: "main_menu_configuration.png")
         } else if(indexPath.row == 1) {
             return TableViewCell(labelText: "Sequences view", imageName: "list.png")
