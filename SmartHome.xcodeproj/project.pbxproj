@@ -25,6 +25,9 @@
 		22D8777B1FC9EA8C00DF2B0D /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D8777A1FC9EA8C00DF2B0D /* Action.swift */; };
 		22D8777D1FC9EABC00DF2B0D /* Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D8777C1FC9EABC00DF2B0D /* Sequence.swift */; };
 		22D8A1AF1FAB686000866A96 /* LightViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D8A1AE1FAB686000866A96 /* LightViewController.swift */; };
+		22D9DA481FEDDD0D005A3B05 /* Sensor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D9DA471FEDDD0D005A3B05 /* Sensor.swift */; };
+		22D9DA4A1FEDDD43005A3B05 /* SensorTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D9DA491FEDDD43005A3B05 /* SensorTableViewCell.swift */; };
+		22D9DA4C1FEDE1A5005A3B05 /* AlarmsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D9DA4B1FEDE1A5005A3B05 /* AlarmsViewController.swift */; };
 		22D9F7C81FCF369E0039E742 /* SequenceTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D9F7C71FCF369E0039E742 /* SequenceTableViewController.swift */; };
 		22DCC16E1FAB45B400DBECF8 /* MainMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DCC16D1FAB45B400DBECF8 /* MainMenuViewController.swift */; };
 		22DDB9291FC9E83000ECAF83 /* Light.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DDB9281FC9E83000ECAF83 /* Light.swift */; };
@@ -76,6 +79,9 @@
 		22D8777A1FC9EA8C00DF2B0D /* Action.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Action.swift; sourceTree = "<group>"; };
 		22D8777C1FC9EABC00DF2B0D /* Sequence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sequence.swift; sourceTree = "<group>"; };
 		22D8A1AE1FAB686000866A96 /* LightViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LightViewController.swift; sourceTree = "<group>"; };
+		22D9DA471FEDDD0D005A3B05 /* Sensor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sensor.swift; sourceTree = "<group>"; };
+		22D9DA491FEDDD43005A3B05 /* SensorTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SensorTableViewCell.swift; sourceTree = "<group>"; };
+		22D9DA4B1FEDE1A5005A3B05 /* AlarmsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlarmsViewController.swift; sourceTree = "<group>"; };
 		22D9F7C71FCF369E0039E742 /* SequenceTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SequenceTableViewController.swift; sourceTree = "<group>"; };
 		22DCC16D1FAB45B400DBECF8 /* MainMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainMenuViewController.swift; sourceTree = "<group>"; };
 		22DDB9281FC9E83000ECAF83 /* Light.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Light.swift; sourceTree = "<group>"; };
@@ -141,6 +147,7 @@
 				22EE13B01FC9CDB400FC8E51 /* SequenceDetailsTableViewController.swift */,
 				22D9F7C71FCF369E0039E742 /* SequenceTableViewController.swift */,
 				22002EA21FEDB2E600DD939E /* ShuttersViewController.swift */,
+				22D9DA4B1FEDE1A5005A3B05 /* AlarmsViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -206,6 +213,7 @@
 				22DDB9281FC9E83000ECAF83 /* Light.swift */,
 				22D8777C1FC9EABC00DF2B0D /* Sequence.swift */,
 				22002EA61FEDBA9000DD939E /* Shutter.swift */,
+				22D9DA471FEDDD0D005A3B05 /* Sensor.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -218,6 +226,7 @@
 				22D1C7F41FCF43FB0021C9DC /* SequenceTableViewCell.swift */,
 				22D5C4261FD21C5400BC3C10 /* SequenceNameTableViewCell.swift */,
 				22002EA41FEDB5A600DD939E /* ShuttersTableViewCell.swift */,
+				22D9DA491FEDDD43005A3B05 /* SensorTableViewCell.swift */,
 			);
 			name = TableViewCells;
 			sourceTree = "<group>";
@@ -530,6 +539,7 @@
 				22002EA31FEDB2E600DD939E /* ShuttersViewController.swift in Sources */,
 				22D8A1AF1FAB686000866A96 /* LightViewController.swift in Sources */,
 				22D8777D1FC9EABC00DF2B0D /* Sequence.swift in Sources */,
+				22D9DA4C1FEDE1A5005A3B05 /* AlarmsViewController.swift in Sources */,
 				22D8777B1FC9EA8C00DF2B0D /* Action.swift in Sources */,
 				22741C251F588B100097D1DA /* LoginController.swift in Sources */,
 				22D5C4271FD21C5400BC3C10 /* SequenceNameTableViewCell.swift in Sources */,
@@ -539,6 +549,8 @@
 				22D490681FA8E8EC0037B35A /* TableViewCell.swift in Sources */,
 				22EE13B11FC9CDB400FC8E51 /* SequenceDetailsTableViewController.swift in Sources */,
 				22002EA51FEDB5A600DD939E /* ShuttersTableViewCell.swift in Sources */,
+				22D9DA4A1FEDDD43005A3B05 /* SensorTableViewCell.swift in Sources */,
+				22D9DA481FEDDD0D005A3B05 /* Sensor.swift in Sources */,
 				225F96FD1F79A2AE00F65AEF /* MenuController.swift in Sources */,
 				22DDB9291FC9E83000ECAF83 /* Light.swift in Sources */,
 				22741C231F588B100097D1DA /* AppDelegate.swift in Sources */,

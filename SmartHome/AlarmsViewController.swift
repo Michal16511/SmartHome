@@ -1,39 +1,42 @@
 //
-//  MainMenuViewController.swift
+//  AlarmsViewController.swift
 //  SmartHome
 //
-//  Created by MacOS on 02/11/17.
+//  Created by MacOS on 23/12/17.
 //  Copyright © 2017 Michał Ryś. All rights reserved.
 //
 
 import UIKit
+import RealmSwift
 
-class MainMenuViewController: UIViewController, UITableViewDelegate, UITableViewDataSource  {
+class AlarmsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, SensorCellDelegate {
     
     private let screenSize = UIScreen.mainScreen().bounds
+    private let tableViewContainer = UIView()
     private var tableView = UITableView()
-    private var tableViewContainer = UIView()
+    private var titleBar = UIView()
+    private var titleWindow = UIImageView()
+    private var titleBarImage = UIImageView()
+    private var menuLabel = UILabel()
+    private var shutter = Shutter(name: "Salon")
     
-    private var cells: [TableViewCell] = [TableViewCell(labelText: "Lights", imageName: "main_menu_lamps.png"),
-        TableViewCell(labelText: "Temperatures", imageName: "main_menu_temperatures.png"),
-        TableViewCell(labelText: "Alarms", imageName: "main_menu_alarms.png"),
-        TableViewCell(labelText: "Shutters", imageName: "main_menu_shutters.png"),
-        TableViewCell(labelText: "Climate", imageName: "heating_icon.png"),
-        TableViewCell(labelText: "Voice control", imageName: "main_menu_voice.png"),
-        TableViewCell(labelText: "Configuration", imageName: "main_menu_configuration.png"),
-        TableViewCell(labelText: "Sequence", imageName: "main_menu_switcher_icon.png")]
+    private var cells: [SensorTableViewCell] = []
     
     func tableView(tableView: UITableView, numberOfSections section: Int) -> Int {
         return 1
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return cells.count
+        return cells.count + 1
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        return cells[indexPath.row]
+        if (indexPath.row == 0) {
+            return TableViewCell(labelText: "Main menu", imageName: "main_menu_configuration.png")
+        } else {
+            return cells[indexPath.row - 1]
+        }
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -42,38 +45,34 @@ class MainMenuViewController: UIViewController, UITableViewDelegate, UITableView
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-        if(cells[indexPath.row].label.text == "Lights"){
-            setupNewViewController(LightViewController())
+        if(indexPath.row == 0){
+            setupNewViewController(MainMenuViewController())
+        }else{
+            //            cells[indexPath.row] = updateLight(cells[indexPath.row])
+            //            tableView.reloadData()
         }
-        else if(cells[indexPath.row].label.text == "Sequence"){
-            setupNewViewController(SequenceTableViewController())
-        }
-        else if(cells[indexPath.row].label.text == "Shutters"){
-            setupNewViewController(ShuttersViewController())
-        }
-        else if(cells[indexPath.row].label.text == "Alarms"){
-            setupNewViewController(AlarmsViewController())
-        }
-        
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
     
     override func viewWillAppear(animated: Bool) {
+        tableView.backgroundView?.backgroundColor = UIColor.clearColor()
         view.backgroundColor = UIColor.clearColor()
         tableView.backgroundColor = UIColor.clearColor()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         tableView.dataSource = self
         tableView.delegate = self
         tableView.registerClass(TableViewCell.self as AnyClass, forCellReuseIdentifier: "Cell")
         tableView.separatorStyle = UITableViewCellSeparatorStyle.None
         
+        cells.append(SensorTableViewCell(sensor: Sensor(name: "Motion sensor", state: "disarmed"), delegate: self))
+        
         addViews()
         setupConstraints()
     }
-
+    
     func setupConstraints(){
         
         tableViewContainer.translatesAutoresizingMaskIntoConstraints = false
@@ -81,7 +80,7 @@ class MainMenuViewController: UIViewController, UITableViewDelegate, UITableView
         tableViewContainer.bottomAnchor.constraintEqualToAnchor(view.bottomAnchor).active = true
         tableViewContainer.leadingAnchor.constraintEqualToAnchor(view.leadingAnchor).active = true
         tableViewContainer.trailingAnchor.constraintEqualToAnchor(view.trailingAnchor).active = true
-
+        
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.topAnchor.constraintEqualToAnchor(tableViewContainer.topAnchor).active = true
         tableView.bottomAnchor.constraintEqualToAnchor(tableViewContainer.bottomAnchor).active = true
@@ -109,5 +108,9 @@ class MainMenuViewController: UIViewController, UITableViewDelegate, UITableView
         vc.view.trailingAnchor.constraintEqualToAnchor(tableViewContainer.trailingAnchor).active = true
         tableView.removeFromSuperview()
         self.dismissViewControllerAnimated(true, completion: {})
+    }
+    
+    func activationStateBtnPressed(sensor: Sensor?) {
+        print("Shutter UP")
     }
 }
